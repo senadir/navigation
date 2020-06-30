@@ -10,7 +10,7 @@
  */
 function add_extension_register_script() {
 
-	if ( ! class_exists( 'Automattic\WooCommerce\Admin\Loader' ) || ! \Automattic\WooCommerce\Admin\Loader::is_admin_page() ) {
+	if ( ! is_admin() ) {
 		return;
 	}
 
@@ -27,17 +27,17 @@ function add_extension_register_script() {
 		$script_asset['dependencies'],
 		$script_asset['version'],
 		true
-	);
-
+    );
+    
 	wp_register_style(
 		'woocommerce-navigation',
-		plugins_url( '/build/style.css', __FILE__ ),
+		plugins_url( '/build/index.css', __FILE__ ),
 		array(),
-		filemtime( dirname( __FILE__ ) . '/build/style.css' )
+		filemtime( dirname( __FILE__ ) . '/build/index.css' )
 	);
 
-	wp_enqueue_script( '{{extension_slug}}' );
-	wp_enqueue_style( '{{extension_slug}}' );
+	wp_enqueue_script( 'woocommerce-navigation' );
+	wp_enqueue_style( 'woocommerce-navigation' );
 }
 
 add_action( 'admin_enqueue_scripts', 'add_extension_register_script' );

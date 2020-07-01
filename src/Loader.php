@@ -32,7 +32,6 @@ class Loader {
 
 	/**
 	 * Constructor.
-	 * Hooks added here should be removed in `wc_admin_initialize` via the feature plugin.
 	 */
 	public function __construct() {
         add_action( 'admin_enqueue_scripts', array( __CLASS__, 'register_navigation_script' ) );

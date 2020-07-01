@@ -41,7 +41,7 @@ if ( is_readable( $autoloader ) ) {
 					<?php
 					printf(
 						/* translators: 1: composer command. 2: plugin directory */
-						esc_html__( 'Your installation of the WooCommerce Navigation feature plugin is incomplete. Please run %1$s within the %2$s directory.', 'woocommerce-admin' ),
+						esc_html__( 'Your installation of the WooCommerce Navigation feature plugin is incomplete. Please run %1$s within the %2$s directory.', 'woocommerce-navigation' ),
 						'<code>composer install</code>',
 						'<code>' . esc_html( str_replace( ABSPATH, '', __DIR__ ) ) . '</code>'
 					);

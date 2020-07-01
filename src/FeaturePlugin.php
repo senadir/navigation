@@ -49,6 +49,9 @@ class FeaturePlugin {
 	public function init() {
         $this->define( 'WC_NAVIGATION_ABSPATH', dirname( __DIR__ ) . '/' );
         $this->define( 'WC_NAVIGATION_PLUGIN_FILE', WC_NAVIGATION_ABSPATH . 'woocommerce-admin.php' );
+        // WARNING: Do not directly edit this version number constant.
+		// It is updated as part of the prebuild process from the package.json value.
+		$this->define( 'WC_NAVIGATION_VERSION_NUMBER', '0.1.0' );
 
 		if ( did_action( 'plugins_loaded' ) ) {
 			self::on_plugins_loaded();
@@ -68,28 +71,29 @@ class FeaturePlugin {
 	 */
 	public function on_plugins_loaded() {
 		if ( ! WCAdminFeaturePlugin::instance()->has_satisfied_dependencies() ) {
-            // todo: properly deactivate
-			// add_action( 'admin_init', array( $this, 'deactivate_self' ) );
-			// add_action( 'admin_notices', array( $this, 'render_dependencies_notice' ) );
-			return;
-		}
-
-		if ( ! $this->check_build() ) {
-            // todo: properly render notice
-			// add_action( 'admin_notices', array( $this, 'render_build_notice' ) );
+			add_action( 'admin_init', array( $this, 'deactivate_self' ) );
+			add_action( 'admin_notices', array( $this, 'render_dependencies_notice' ) );
+            
+            return;
 		}
 
 		new Loader();
     }
 
     /**
-	 * Returns true if build file exists.
-	 *
-	 * @return bool
+	 * Notify users of the plugin requirements.
 	 */
-	protected function check_build() {
-		return file_exists( plugin_dir_path( __DIR__ ) . '/build/index.js' );
-    }
+	public function render_dependencies_notice() {
+        WCAdminFeaturePlugin::instance()->render_dependencies_notice();
+	}
+
+    /**
+	 * Deactivates this plugin.
+	 */
+	public function deactivate_self() {
+		deactivate_plugins( plugin_basename( WC_NAVIGATION_PLUGIN_FILE ) );
+		unset( $_GET['activate'] ); // phpcs:ignore CSRF ok.
+	}
     
     /**
 	 * Define constant if not already set.

@@ -1,7 +1,7 @@
 {
 	"name": "woocommerce/navigation",
 	"description": "A modern, javascript-driven navigation experience.",
-	"homepage": "https://github.com/woocommerce/woocommerce-admin",
+	"homepage": "https://github.com/woocommerce/navigation",
 	"type": "wordpress-plugin",
 	"license": "GPL-3.0-or-later",
 	"prefer-stable": true,

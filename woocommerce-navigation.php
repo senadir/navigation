@@ -2,42 +2,56 @@
 /**
  * Plugin Name: WooCommerce Navigation
  *
- * @package WC_Admin
+ * @package  WooCommerce Navigation
  */
+
+defined( 'ABSPATH' ) || exit;
+
+use \Automattic\WooCommerce\Navigation\FeaturePlugin;
 
 /**
- * Register the JS.
+ * Autoload packages.
+ *
+ * We want to fail gracefully if `composer install` has not been executed yet, so we are checking for the autoloader.
+ * If the autoloader is not present, let's log the failure and display a nice admin notice.
  */
-function add_extension_register_script() {
-
-	if ( ! is_admin() ) {
-		return;
+$autoloader = __DIR__ . '/vendor/autoload.php';
+if ( is_readable( $autoloader ) ) {
+	require $autoloader;
+} else {
+	if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+		error_log(  // phpcs:ignore
+			sprintf(
+				/* translators: 1: composer command. 2: plugin directory */
+				esc_html__( 'Your installation of the WooCommerce Navigation feature plugin is incomplete. Please run %1$s within the %2$s directory.', 'woocommerce-navigation' ),
+				'`composer install`',
+				'`' . esc_html( str_replace( ABSPATH, '', __DIR__ ) ) . '`'
+			)
+		);
 	}
-
-	$script_path       = '/build/index.js';
-	$script_asset_path = dirname( __FILE__ ) . '/build/index.asset.php';
-	$script_asset      = file_exists( $script_asset_path )
-		? require( $script_asset_path )
-		: array( 'dependencies' => array(), 'version' => filemtime( $script_path ) );
-	$script_url = plugins_url( $script_path, __FILE__ );
-
-	wp_register_script(
-		'woocommerce-navigation',
-		$script_url,
-		$script_asset['dependencies'],
-		$script_asset['version'],
-		true
-    );
-    
-	wp_register_style(
-		'woocommerce-navigation',
-		plugins_url( '/build/index.css', __FILE__ ),
-		array(),
-		filemtime( dirname( __FILE__ ) . '/build/index.css' )
+	/**
+	 * Outputs an admin notice if composer install has not been ran.
+	 */
+	add_action(
+		'admin_notices',
+		function() {
+			?>
+			<div class="notice notice-error">
+				<p>
+					<?php
+					printf(
+						/* translators: 1: composer command. 2: plugin directory */
+						esc_html__( 'Your installation of the WooCommerce Navigation feature plugin is incomplete. Please run %1$s within the %2$s directory.', 'woocommerce-navigation' ),
+						'<code>composer install</code>',
+						'<code>' . esc_html( str_replace( ABSPATH, '', __DIR__ ) ) . '</code>'
+					);
+					?>
+				</p>
+			</div>
+			<?php
+		}
 	);
-
-	wp_enqueue_script( 'woocommerce-navigation' );
-	wp_enqueue_style( 'woocommerce-navigation' );
+	return;
 }
 
-add_action( 'admin_enqueue_scripts', 'add_extension_register_script' );
+FeaturePlugin::instance()->init();

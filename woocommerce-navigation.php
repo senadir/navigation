@@ -23,7 +23,7 @@ if ( is_readable( $autoloader ) ) {
 		error_log(  // phpcs:ignore
 			sprintf(
 				/* translators: 1: composer command. 2: plugin directory */
-				esc_html__( 'Your installation of the WooCommerce Admin feature plugin is incomplete. Please run %1$s within the %2$s directory.', 'woocommerce-admin' ),
+				esc_html__( 'Your installation of the WooCommerce Navigation feature plugin is incomplete. Please run %1$s within the %2$s directory.', 'woocommerce-navigation' ),
 				'`composer install`',
 				'`' . esc_html( str_replace( ABSPATH, '', __DIR__ ) ) . '`'
 			)

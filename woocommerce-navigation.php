@@ -2,7 +2,7 @@
 /**
  * Plugin Name: WooCommerce Navigation
  *
- * @package WC_Admin
+ * @package  WooCommerce Navigation
  */
 
 defined( 'ABSPATH' ) || exit;

@@ -8,8 +8,9 @@
 
 namespace Automattic\WooCommerce\Navigation;
 
-use Automattic\WooCommerce\Navigation\Menu;
 use Automattic\WooCommerce\Navigation\CoreMenu;
+use Automattic\WooCommerce\Navigation\Menu;
+use Automattic\WooCommerce\Navigation\Screen;
 
 /**
  * Loader Class.
@@ -46,6 +47,7 @@ class Loader {
 		
 		Menu::instance()->init();
 		CoreMenu::instance()->init();
+		Screen::instance()->init();
     }
 
     /**
@@ -101,7 +103,7 @@ class Loader {
 	 * The initial contents here are meant as a place loader for when the PHP page initialy loads.
 	 */
 	public static function embed_navigation() {
-		if ( ! Menu::is_woocommerce_page() ) {
+		if ( ! Screen::is_woocommerce_page() ) {
 			return;
 		}
 

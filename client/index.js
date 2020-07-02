@@ -1,4 +1,14 @@
-// Import SCSS entry file so that webpack picks up changes
-import './index.scss';
+/**
+ * External dependencies
+ */
+import { render } from '@wordpress/element';
 
-console.log('hello world');
+/**
+ * Internal dependencies
+ */
+import './stylesheets/index.scss';
+import Navigation from './navigation';
+
+const navigationRoot = document.getElementById( 'woocommerce-embedded-navigation' );
+render( <Navigation />, navigationRoot );
+

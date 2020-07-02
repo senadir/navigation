@@ -87,7 +87,7 @@ class Menu {
 	 *
 	 * @return bool
 	 */
-	public function is_woocommerce_page() {
+	public static function is_woocommerce_page() {
 		global $pagenow, $plugin_page;
 
 		// Get post type if on a post screen.

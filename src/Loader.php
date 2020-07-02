@@ -8,6 +8,8 @@
 
 namespace Automattic\WooCommerce\Navigation;
 
+use Automattic\WooCommerce\Navigation\Menu;
+
 /**
  * Loader Class.
  */
@@ -34,7 +36,10 @@ class Loader {
 	 * Constructor.
 	 */
 	public function __construct() {
-        add_action( 'admin_enqueue_scripts', array( __CLASS__, 'register_navigation_script' ) );
+		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'register_navigation_script' ) );
+		add_action( 'in_admin_header', array( __CLASS__, 'embed_navigation' ) );
+		
+		Menu::instance()->init();
     }
 
     /**
@@ -83,5 +88,19 @@ class Loader {
 
         wp_enqueue_script( 'woocommerce-navigation' );
         wp_enqueue_style( 'woocommerce-navigation' );
-    }
+	}
+	
+	/**
+	 * Set up a div for the navigation.
+	 * The initial contents here are meant as a place loader for when the PHP page initialy loads.
+	 */
+	public static function embed_navigation() {
+		if ( ! Menu::is_woocommerce_page() ) {
+			return;
+		}
+
+		?>
+		<div id="woocommerce-embedded-navigation"></div>
+		<?php
+	}
 }

@@ -9,6 +9,7 @@
 namespace Automattic\WooCommerce\Navigation;
 
 use Automattic\WooCommerce\Navigation\Menu;
+use Automattic\WooCommerce\Navigation\CoreMenu;
 
 /**
  * Loader Class.
@@ -36,10 +37,15 @@ class Loader {
 	 * Constructor.
 	 */
 	public function __construct() {
+		if ( ! is_admin() ) {
+			return;
+		}
+
 		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'register_navigation_script' ) );
 		add_action( 'in_admin_header', array( __CLASS__, 'embed_navigation' ) );
 		
 		Menu::instance()->init();
+		CoreMenu::instance()->init();
     }
 
     /**

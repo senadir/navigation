@@ -105,7 +105,7 @@ class Menu {
 	/**
 	 * Get the parent key if one exists.
 	 *
-	 * @param string $url Callback or URL.
+	 * @param string $callback Callback or URL.
 	 * @return string|null
 	 */
 	public static function get_parent_key( $callback ) {

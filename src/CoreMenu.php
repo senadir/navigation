@@ -9,6 +9,10 @@ namespace Automattic\WooCommerce\Navigation;
 
 use Automattic\WooCommerce\Navigation\Menu;
 
+
+/**
+ * CoreMenu class. Handles registering Core menu items.
+ */
 class CoreMenu {
 	/**
 	 * Class instance.
@@ -35,7 +39,7 @@ class CoreMenu {
 		add_action( 'admin_menu', array( $this, 'add_core_setting_items' ) );
 	}
 
-		/**
+	/**
 	 * Add registered admin settings as menu items.
 	 */
 	public function add_core_setting_items() {
@@ -61,7 +65,7 @@ class CoreMenu {
 	public function add_core_items() {
 		// Orders category.
 		Menu::add_category(
-			__( 'Orders', 'woocommerce-admin' ),
+			__( 'Orders', 'woocommerce-navigation' ),
 			'edit_shop_orders',
 			'orders',
 			'edit.php?post_type=shop_order'
@@ -69,7 +73,7 @@ class CoreMenu {
 
 		// Products category.
 		Menu::add_category(
-			__( 'Products', 'woocommerce-admin' ),
+			__( 'Products', 'woocommerce-navigation' ),
 			'edit_products',
 			'products',
 			'edit.php?post_type=product'
@@ -77,7 +81,7 @@ class CoreMenu {
 
 		// Extensions category.
 		Menu::add_category(
-			__( 'Extensions', 'woocommerce-admin' ),
+			__( 'Extensions', 'woocommerce-navigation' ),
 			'activate_plugins',
 			'extensions',
 			'plugins.php',
@@ -87,7 +91,7 @@ class CoreMenu {
 		);
 		Menu::add_item(
 			'extensions',
-			__( 'My extensions', 'woocommerce-admin' ),
+			__( 'My extensions', 'woocommerce-navigation' ),
 			'manage_woocommerce',
 			'my-extensions',
 			'plugins.php',
@@ -97,7 +101,7 @@ class CoreMenu {
 		);
 		Menu::add_item(
 			'extensions',
-			__( 'Marketplace', 'woocommerce-admin' ),
+			__( 'Marketplace', 'woocommerce-navigation' ),
 			'manage_woocommerce',
 			'marketplace',
 			'wc-addons'
@@ -105,7 +109,7 @@ class CoreMenu {
 
 		// Settings category.
 		Menu::add_category(
-			__( 'Settings', 'woocommerce-admin' ),
+			__( 'Settings', 'woocommerce-navigation' ),
 			'manage_woocommerce',
 			'settings',
 			'wc-settings'
@@ -113,21 +117,21 @@ class CoreMenu {
 
 		// Tools category.
 		Menu::add_category(
-			__( 'Tools', 'woocommerce-admin' ),
+			__( 'Tools', 'woocommerce-navigation' ),
 			'manage_woocommerce',
 			'tools',
 			'wc-status'
 		);
 		Menu::add_item(
 			'tools',
-			__( 'System status', 'woocommerce-admin' ),
+			__( 'System status', 'woocommerce-navigation' ),
 			'manage_woocommerce',
 			'system-status',
 			'wc-status'
 		);
 		Menu::add_item(
 			'tools',
-			__( 'Import / Export', 'woocommerce-admin' ),
+			__( 'Import / Export', 'woocommerce-navigation' ),
 			'import',
 			'import-export',
 			'import.php',
@@ -137,7 +141,7 @@ class CoreMenu {
 		);
 		Menu::add_item(
 			'tools',
-			__( 'Utilities', 'woocommerce-admin' ),
+			__( 'Utilities', 'woocommerce-navigation' ),
 			'manage_woocommerce',
 			'utilities',
 			'admin.php?page=wc-status&tab=tools'

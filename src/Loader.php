@@ -67,11 +67,6 @@ class Loader {
      * Register the JS.
      */
     public static function register_navigation_script() {
-
-        if ( ! is_admin() ) {
-            return;
-        }
-
         $script_path       = '/build/index.js';
         $script_asset_path = WC_NAVIGATION_ABSPATH . '/build/index.asset.php';
         $script_asset      = file_exists( $script_asset_path )

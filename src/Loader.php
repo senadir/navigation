@@ -8,6 +8,10 @@
 
 namespace Automattic\WooCommerce\Navigation;
 
+use Automattic\WooCommerce\Navigation\CoreMenu;
+use Automattic\WooCommerce\Navigation\Menu;
+use Automattic\WooCommerce\Navigation\Screen;
+
 /**
  * Loader Class.
  */
@@ -34,7 +38,16 @@ class Loader {
 	 * Constructor.
 	 */
 	public function __construct() {
-        add_action( 'admin_enqueue_scripts', array( __CLASS__, 'register_navigation_script' ) );
+		if ( ! is_admin() ) {
+			return;
+		}
+
+		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'register_navigation_script' ) );
+		add_action( 'in_admin_header', array( __CLASS__, 'embed_navigation' ) );
+		
+		Menu::instance()->init();
+		CoreMenu::instance()->init();
+		Screen::instance()->init();
     }
 
     /**
@@ -54,11 +67,6 @@ class Loader {
      * Register the JS.
      */
     public static function register_navigation_script() {
-
-        if ( ! is_admin() ) {
-            return;
-        }
-
         $script_path       = '/build/index.js';
         $script_asset_path = WC_NAVIGATION_ABSPATH . '/build/index.asset.php';
         $script_asset      = file_exists( $script_asset_path )
@@ -83,5 +91,19 @@ class Loader {
 
         wp_enqueue_script( 'woocommerce-navigation' );
         wp_enqueue_style( 'woocommerce-navigation' );
-    }
+	}
+	
+	/**
+	 * Set up a div for the navigation.
+	 * The initial contents here are meant as a place loader for when the PHP page initialy loads.
+	 */
+	public static function embed_navigation() {
+		if ( ! Screen::is_woocommerce_page() ) {
+			return;
+		}
+
+		?>
+		<div id="woocommerce-embedded-navigation"></div>
+		<?php
+	}
 }

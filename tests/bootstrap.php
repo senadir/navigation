@@ -67,7 +67,7 @@ class Navigation_Unit_Tests_Bootstrap {
 	}
 
 	/**
-	 * Load WooCommerce Admin.
+	 * Load WooCommerce Navigation.
 	 */
 	public function load_wc() {
 		require_once $this->wc_core_dir . '/woocommerce.php';

@@ -1,6 +1,6 @@
 <?php
 /**
- * WooCommerce Admin Unit Tests Bootstrap
+ * WooCommerce Navigation Unit Tests Bootstrap
  *
  * @package WooCommerce Admin Tests
  */

@@ -2,7 +2,7 @@
 /**
  * WooCommerce Navigation Unit Tests Bootstrap
  *
- * @package WooCommerce Admin Tests
+ * @package WooCommerce Navigation Tests
  */
 
 /**

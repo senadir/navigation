@@ -83,8 +83,8 @@ class Menu {
 	 * Init.
 	 */
 	public function init() {
-		add_action( 'admin_menu', array( $this, 'add_settings' ), 20 );
-		add_filter( 'add_menu_classes', array( $this, 'migrate_menu_items' ) );
+		add_filter( 'add_menu_classes', array( $this, 'add_settings' ), 20 );
+		add_filter( 'add_menu_classes', array( $this, 'migrate_menu_items' ), 30 );
 	}
 
 	/**
@@ -227,8 +227,11 @@ class Menu {
 
 	/**
 	 * Add the menu to the page output.
+	 *
+	 * @param array $menu Menu items.
+	 * @return array
 	 */
-	public function add_settings() {
+	public function add_settings( $menu ) {
 		global $submenu, $parent_file, $typenow, $self;
 
 		$categories = self::$categories;
@@ -255,5 +258,7 @@ class Menu {
 		);
 
 		$data_registry->add( 'wcNavigation', $categories );
+
+		return $menu;
 	}
 }

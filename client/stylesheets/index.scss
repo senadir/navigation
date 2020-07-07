@@ -1,5 +1,15 @@
-@import '_colors.scss';
 @import '_variables.scss';
+
+@mixin sidebar-scheme($color) {
+	--wp-admin-sidebar-color: #{$color};
+}
+
+body.admin-color-coffee {
+	@include sidebar-scheme(#59524c);
+	.woocommerce-navigation {
+		background: var(--wp-admin-sidebar-color);
+	}
+}
 
 .woocommerce-navigation {
 	color: initial;
@@ -8,7 +18,7 @@
 	left: 0;
 	width: 160px;
 	height: 100%;
-	background: $core-grey-dark-800;
+	background: #23282d;
 }
 
 .woocommerce-navigation__menu-item {

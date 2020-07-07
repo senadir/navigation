@@ -37,6 +37,7 @@ class CoreMenu {
 	public function init() {
 		add_action( 'admin_menu', array( $this, 'add_core_items' ) );
 		add_action( 'admin_menu', array( $this, 'add_core_setting_items' ) );
+		add_filter( 'add_menu_classes', array( $this, 'migrate_child_items' ) );
 	}
 
 	/**
@@ -157,5 +158,35 @@ class CoreMenu {
 			null,
 			false
 		);
+	}
+
+	/**
+	 * Migrate any remaining WooCommerce child items.
+	 *
+	 * @param array $menu Menu items.
+	 * @return array
+	 */
+	public function migrate_child_items( $menu ) {
+		global $submenu;
+
+		if ( ! isset( $submenu['woocommerce'] ) ) {
+			return;
+		}
+
+		foreach ( $submenu['woocommerce'] as $menu_item ) {
+			if ( 'woocommerce' === $menu_item[2] ) {
+				continue;
+			}
+
+			Menu::add_item(
+				'settings',
+				$menu_item[0],
+				$menu_item[1],
+				sanitize_title( $menu_item[0] ),
+				$menu_item[2]
+			);
+		}
+
+		return $menu;
 	}
 }

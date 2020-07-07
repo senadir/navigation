@@ -9,6 +9,7 @@ import { render } from '@wordpress/element';
 import './stylesheets/index.scss';
 import Navigation from './navigation';
 
-const navigationRoot = document.getElementById( 'woocommerce-embedded-navigation' );
+const navigationRoot = document.getElementById(
+	'woocommerce-embedded-navigation'
+);
 render( <Navigation />, navigationRoot );
-

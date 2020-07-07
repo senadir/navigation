@@ -4,7 +4,6 @@
 import { Component } from '@wordpress/element';
 
 export default class Navigation extends Component {
-
 	componentDidMount() {
 		// Collapse the original WP Menu.
 		const adminMenu = document.getElementById( 'adminmenumain' );
@@ -17,7 +16,7 @@ export default class Navigation extends Component {
 		return (
 			<li
 				key={ slug }
-				className={ `woocommerce-navigation__menu-item woocommerce-navigation__menu-item-depth-${depth}` }
+				className={ `woocommerce-navigation__menu-item woocommerce-navigation__menu-item-depth-${ depth }` }
 			>
 				<a href={ url }>{ title }</a>
 				{ item.children && item.children.length && (
@@ -28,13 +27,13 @@ export default class Navigation extends Component {
 					</ul>
 				) }
 			</li>
-		)
+		);
 	}
 
 	render() {
 		// @todo This should be updated to use a wp data store.
-		const items = window.wcNavigation || [];
-		
+		const items = window.wcSettings && window.wcSettings.wcNavigation ? window.wcSettings.wcNavigation : [];
+
 		return (
 			<div className="woocommerce-navigation">
 				<ul className="woocommerce-navigation__menu">

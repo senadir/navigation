@@ -1,0 +1,35 @@
+@mixin navigation-scheme($color) {
+	--wp-admin-sidebar-color: #{$color};
+}
+
+body.admin-color-light {
+	@include navigation-scheme(#59524c);
+}
+
+body.admin-color-blue {
+	@include navigation-scheme(#52accc);
+}
+
+body.admin-color-coffee {
+	@include navigation-scheme(#59524c);
+}
+
+body.admin-color-ectoplasm {
+	@include navigation-scheme(#523f6d);
+}
+
+body.admin-color-midnight {
+	@include navigation-scheme(#363b3f);
+}
+
+body.admin-color-ocean {
+	@include navigation-scheme(#738e96);
+}
+
+body.admin-color-sunrise {
+	@include navigation-scheme(#cf4944);
+}
+
+:root {
+	@include navigation-scheme(#23282d);
+}

@@ -1,15 +1,10 @@
+@import "node_modules/@wordpress/base-styles/colors";
+@import "node_modules/@wordpress/base-styles/variables";
+@import "node_modules/@wordpress/base-styles/mixins";
+@import "node_modules/@wordpress/base-styles/breakpoints";
+@import "node_modules/@wordpress/base-styles/animations";
+@import "node_modules/@wordpress/base-styles/z-index";
 @import '_variables.scss';
-
-@mixin sidebar-scheme($color) {
-	--wp-admin-sidebar-color: #{$color};
-}
-
-body.admin-color-coffee {
-	@include sidebar-scheme(#59524c);
-	.woocommerce-navigation {
-		background: var(--wp-admin-sidebar-color);
-	}
-}
 
 .woocommerce-navigation {
 	color: initial;
@@ -18,7 +13,7 @@ body.admin-color-coffee {
 	left: 0;
 	width: 160px;
 	height: 100%;
-	background: #23282d;
+	background: var(--wp-admin-sidebar-color);
 }
 
 .woocommerce-navigation__menu-item {

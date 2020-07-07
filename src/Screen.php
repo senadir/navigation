@@ -113,4 +113,13 @@ class Screen {
 		}
 		self::$screen_ids[] = get_plugin_page_hookname( $callback, $parent );
 	}
+
+	/**
+	 * Register post type for use in WooCommerce Navigation screens.
+	 *
+	 * @param string $post_type Post type to add.
+	 */
+	public static function register_post_type( $post_type ) {
+		self::$post_types[] = $post_type;
+	}
 }

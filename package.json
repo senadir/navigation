@@ -28,9 +28,30 @@
 				"@wordpress/prettier-config": "0.3.0",
 				"@wordpress/scripts": "12.0.0",
 				"browserslist": "4.13.0",
-				"prettier": "npm:wp-prettier@2.0.5"
+				"husky": "4.2.5",
+				"lint-staged": "10.2.11",
+				"prettier": "npm:wp-prettier@2.0.5",
+				"stylelint-config-wordpress": "17.0.0"
 		},
 		"browserslist": [
 				"extends @wordpress/browserslist-config"
-		]
+		],
+		"husky": {
+				"hooks": {
+						"pre-commit": "lint-staged",
+						"pre-push": "npm run test:unit"
+				}
+		},
+		"lint-staged": {
+				"*.scss": [
+						"npm run lint:css"
+				],
+				"*.js": [
+						"npm run format:js",
+						"npm run lint:js"
+				],
+				"*.php": [
+						"npm run lint:php"
+				]
+		}
 }

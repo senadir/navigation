@@ -32,7 +32,7 @@ export default class Navigation extends Component {
 
 	render() {
 		// @todo This should be updated to use a wp data store.
-		const items = window.wcSettings && window.wcSettings.wcNavigation ? window.wcSettings.wcNavigation : [];
+		const items = window.wcNavigation || [];
 
 		return (
 			<div className="woocommerce-navigation">

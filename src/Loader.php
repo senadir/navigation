@@ -80,7 +80,7 @@ class Loader {
 		wp_register_script(
 			'woocommerce-navigation',
 			$script_url,
-			array_merge( $script_asset['dependencies'], array( WC_ADMIN_APP ) ),
+			$script_asset['dependencies'],
 			$script_asset['version'],
 			true
 		);

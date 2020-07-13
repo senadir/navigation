@@ -8,6 +8,7 @@
 namespace Automattic\WooCommerce\Navigation;
 
 use Automattic\WooCommerce\Navigation\Menu;
+use Automattic\WooCommerce\Navigation\Screen;
 
 
 /**
@@ -65,20 +66,24 @@ class CoreMenu {
 	 */
 	public function add_core_items() {
 		// Orders category.
-		Menu::add_category(
-			__( 'Orders', 'woocommerce-navigation' ),
-			'edit_shop_orders',
-			'orders',
-			'edit.php?post_type=shop_order'
-		);
+		Screen::register_post_type( 'shop_order' );
 
 		// Products category.
+		Screen::register_post_type( 'product', 'shop_order' );
+
+		// Marketing category.
+		// @todo This should check if the marketing feature from WCA is active
+		// and allow that plugin to configure this menu item if so.
 		Menu::add_category(
-			__( 'Products', 'woocommerce-navigation' ),
-			'edit_products',
-			'products',
-			'edit.php?post_type=product'
+			__( 'Marketing', 'woocommerce-navigation' ),
+			'manage_woocommerce',
+			'marketing',
+			null,
+			null,
+			null,
+			false
 		);
+		Screen::register_post_type( 'shop_coupon', 'marketing' );
 
 		// Extensions category.
 		Menu::add_category(

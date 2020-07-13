@@ -134,15 +134,22 @@ class Screen {
 				$parent_slug,
 				esc_attr( $post_type_object->labels->menu_name ),
 				$post_type_object->cap->edit_posts,
-				"{$post_type}",
+				$post_type,
 				"edit.php?post_type=$post_type"
 			);
 		} else {
 			Menu::add_category(
 				esc_attr( $post_type_object->labels->menu_name ),
 				$post_type_object->cap->edit_posts,
-				"{$post_type}",
+				$post_type,
 				"edit.php?post_type=$post_type"
+			);
+			Menu::add_item(
+				"{$post_type}",
+				esc_attr( $post_type_object->labels->all_items ),
+				$post_type_object->cap->edit_posts,
+				"{$post_type}-all",
+				"edit.php?post_type={$post_type}"
 			);
 		}
 	}

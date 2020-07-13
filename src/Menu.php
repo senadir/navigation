@@ -83,7 +83,7 @@ class Menu {
 	 * Init.
 	 */
 	public function init() {
-		add_filter( 'add_menu_classes', array( $this, 'add_settings' ), 20 );
+		add_filter( 'admin_enqueue_scripts', array( $this, 'enqueue_data' ), 20 );
 		add_filter( 'add_menu_classes', array( $this, 'migrate_menu_items' ), 30 );
 	}
 
@@ -231,7 +231,7 @@ class Menu {
 	 * @param array $menu Menu items.
 	 * @return array
 	 */
-	public function add_settings( $menu ) {
+	public function enqueue_data( $menu ) {
 		global $submenu, $parent_file, $typenow, $self;
 
 		$categories = self::$categories;
@@ -253,11 +253,7 @@ class Menu {
 			}
 		}
 
-		$data_registry = \Automattic\WooCommerce\Blocks\Package::container()->get(
-			\Automattic\WooCommerce\Blocks\Assets\AssetDataRegistry::class
-		);
-
-		$data_registry->add( 'wcNavigation', $categories );
+		wp_add_inline_script( 'woocommerce-navigation', 'window.wcNavigation = ' . wp_json_encode( $categories ), 'before' );
 
 		return $menu;
 	}

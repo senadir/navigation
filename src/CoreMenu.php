@@ -66,10 +66,12 @@ class CoreMenu {
 	 */
 	public function add_core_items() {
 		// Orders category.
-		Screen::register_post_type( 'shop_order' );
+		Screen::register_post_type( 'shop_order', null );
+		Menu::add_post_type_category( 'shop_order' );
 
 		// Products category.
-		Screen::register_post_type( 'product', 'shop_order' );
+		Screen::register_post_type( 'product', null );
+		Menu::add_post_type_category( 'product' );
 
 		// Marketing category.
 		// @todo This should check if the marketing feature from WCA is active

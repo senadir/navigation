@@ -113,4 +113,28 @@ class Screen {
 		}
 		self::$screen_ids[] = get_plugin_page_hookname( $callback, $parent );
 	}
+
+	/**
+	 * Register post type for use in WooCommerce Navigation screens.
+	 *
+	 * @param string $post_type Post type to add.
+	 * @param string $parent_slug Slug of parent menu item.
+	 */
+	public static function register_post_type( $post_type, $parent_slug ) {
+		self::$post_types[] = $post_type;
+
+		$post_type_object = get_post_type_object( $post_type );
+
+		if ( ! $post_type_object || ! $post_type_object->show_in_menu || ! $parent_slug ) {
+			return;
+		}
+
+		Menu::add_item(
+			$parent_slug,
+			esc_attr( $post_type_object->labels->menu_name ),
+			$post_type_object->cap->edit_posts,
+			$post_type,
+			"edit.php?post_type={$post_type}"
+		);
+	}
 }

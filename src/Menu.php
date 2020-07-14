@@ -224,6 +224,15 @@ class Menu {
 	}
 
 	/**
+	 * Get registered menu items.
+	 *
+	 * @return array
+	 */
+	public static function get_items() {
+		return apply_filters( 'woocommerce_navigation_menu_items', self::$menu_items );
+	}
+
+	/**
 	 * Add the menu to the page output.
 	 *
 	 * @param array $menu Menu items.
@@ -232,7 +241,7 @@ class Menu {
 	public function enqueue_data( $menu ) {
 		global $submenu, $parent_file, $typenow, $self;
 
-		$menu_items = self::$menu_items;
+		$menu_items = self::get_items();
 		foreach ( $menu_items as $index => $menu_item ) {
 			if ( $menu_item[ 'capability' ] && ! current_user_can( $menu_item[ 'capability' ] ) ) {
 				unset( $menu_items[ $index ] );

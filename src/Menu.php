@@ -127,17 +127,15 @@ class Menu {
 	 * @param string $capability WordPress capability.
 	 * @param string $slug Menu slug.
 	 * @param string $url URL or menu callback.
-	 * @param string $icon Menu icon.
 	 * @param int    $order Menu order.
 	 * @param bool   $migrate Migrate the menu option and hide the old one.
 	 */
-	public static function add_category( $title, $capability, $slug, $url = null, $icon = null, $order = null, $migrate = true ) {
+	public static function add_category( $title, $capability, $slug, $url = null, $order = null, $migrate = true ) {
 		self::$menu_items[ $slug ] = array(
 			'title'      => $title,
 			'capability' => $capability,
 			'slug'       => $slug,
 			'url'        => self::get_callback_url( $url ),
-			'icon'       => $icon,
 			'order'      => $order,
 			'migrate'    => $migrate,
 		);
@@ -153,11 +151,10 @@ class Menu {
 	 * @param string $capability WordPress capability.
 	 * @param string $slug Menu slug.
 	 * @param string $url URL or menu callback.
-	 * @param string $icon Menu icon.
 	 * @param int    $order Menu order.
 	 * @param bool   $migrate Migrate the menu option and hide the old one.
 	 */
-	public static function add_item( $parent_slug, $title, $capability, $slug, $url = null, $icon = null, $order = null, $migrate = true ) {
+	public static function add_item( $parent_slug, $title, $capability, $slug, $url = null, $order = null, $migrate = true ) {
 		if ( isset( self::$menu_items[ $slug ] ) ) {
 			return;
 		}
@@ -168,7 +165,6 @@ class Menu {
 			'capability' => $capability,
 			'slug'       => $slug,
 			'url'        => self::get_callback_url( $url ),
-			'icon'       => $icon,
 			'order'      => $order,
 			'migrate'    => $migrate,
 		);

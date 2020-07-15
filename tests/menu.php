@@ -19,7 +19,7 @@ class WC_Tests_Navigation_Menu extends WC_REST_Unit_Test_Case {
 			'Test Category',
 			'manage_woocommerce',
 			'test-category',
-			'',
+			''
 		);
 
 		Menu::add_item(
@@ -27,7 +27,7 @@ class WC_Tests_Navigation_Menu extends WC_REST_Unit_Test_Case {
 			'Test Item',
 			'manage_woocommerce',
 			'test-item',
-			'',
+			''
 		);
 
 		$menu_items = Menu::instance()::get_items();
@@ -52,7 +52,7 @@ class WC_Tests_Navigation_Menu extends WC_REST_Unit_Test_Case {
 			'Test Item',
 			'manage_woocommerce',
 			'test-item',
-			'',
+			''
 		);
 
 		$this->assertEquals( 2, count( Menu::instance()::get_items() ) );
@@ -66,7 +66,7 @@ class WC_Tests_Navigation_Menu extends WC_REST_Unit_Test_Case {
 			__( 'Test Page', 'woocommerce-navigation' ),
 			'manage_woocommerce',
 			'test-plugins',
-			'wc-test',
+			'wc-test'
 		);
 
 		$url = Menu::instance()::get_items()['test-plugins']['url'];

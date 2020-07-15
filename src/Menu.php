@@ -111,6 +111,10 @@ class Menu {
 	public static function get_parent_key( $callback ) {
 		global $submenu;
 
+		if ( ! $submenu ) {
+			return null;
+		}
+
 		// This is already a parent item.
 		if ( isset( $submenu[ $callback ] ) ) {
 			return null;

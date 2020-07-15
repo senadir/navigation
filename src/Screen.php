@@ -52,12 +52,26 @@ class Screen {
 	}
 
 	/**
+	 * Returns an array of filtered screen ids.
+	 */
+	public static function get_screen_ids() {
+		return apply_filters( 'woocommerce_navigation_screen_ids', self::$screen_ids );
+	}
+
+	/**
+	 * Returns an array of registered post types.
+	 */
+	public static function get_post_types() {
+		return apply_filters( 'woocommerce_navigation_post_types', self::$post_types );
+	}
+
+	/**
 	 * Check if we're on a WooCommerce page
 	 *
 	 * @return bool
 	 */
 	public static function is_woocommerce_page() {
-		global $pagenow, $plugin_page;
+		global $pagenow;
 
 		// Get post type if on a post screen.
 		$post_type = '';
@@ -68,15 +82,16 @@ class Screen {
 				$post_type = sanitize_text_field( wp_unslash( $_GET['post_type'] ) ); // phpcs:ignore CSRF ok.
 			}
 		}
-		$post_types = apply_filters( 'woocommerce_navigation_post_types', self::$post_types );
+		$post_types = self::get_post_types();
 
 		// Get current screen ID.
-		$current_screen = get_current_screen();
-		$screen_ids     = apply_filters( 'woocommerce_navigation_screen_ids', self::$screen_ids );
+		$current_screen    = get_current_screen();
+		$screen_ids        = self::get_screen_ids();
+		$current_screen_id = $current_screen ? $current_screen->id : null;
 
 		if (
 			in_array( $post_type, $post_types, true ) ||
-			in_array( $current_screen->id, self::$screen_ids, true )
+			in_array( $current_screen_id, $screen_ids, true )
 		) {
 			return true;
 		}
@@ -111,6 +126,14 @@ class Screen {
 		if ( ! $parent ) {
 			$parent = Menu::get_parent_key( $callback );
 		}
+
+		$screen_id = get_plugin_page_hookname( $callback, $parent );
+
+		// This screen has already been added.
+		if ( in_array( $screen_id, self::$screen_ids, true ) ) {
+			return;
+		}
+
 		self::$screen_ids[] = get_plugin_page_hookname( $callback, $parent );
 	}
 

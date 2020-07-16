@@ -23,9 +23,7 @@
 		</properties>
 	</rule>
 
-	<rule ref="PHPCompatibility">
-		<exclude-pattern>tests/</exclude-pattern>
-	</rule>
+	<rule ref="PHPCompatibility" />
 
 	<rule ref="WordPress.Files.FileName.InvalidClassFileName">
 		<exclude-pattern>src/*</exclude-pattern>

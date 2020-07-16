@@ -49,14 +49,7 @@ class Menu {
 	const CSS_CLASSES = 4;
 
 	/**
-	 * Store top level categories.
-	 *
-	 * @var array
-	 */
-	protected static $categories = array();
-
-	/**
-	 * Store related menu items.
+	 * Store menu items.
 	 *
 	 * @var array
 	 */
@@ -134,17 +127,15 @@ class Menu {
 	 * @param string $capability WordPress capability.
 	 * @param string $slug Menu slug.
 	 * @param string $url URL or menu callback.
-	 * @param string $icon Menu icon.
 	 * @param int    $order Menu order.
 	 * @param bool   $migrate Migrate the menu option and hide the old one.
 	 */
-	public static function add_category( $title, $capability, $slug, $url = null, $icon = null, $order = null, $migrate = true ) {
-		self::$categories[] = array(
+	public static function add_category( $title, $capability, $slug, $url = null, $order = null, $migrate = true ) {
+		self::$menu_items[ $slug ] = array(
 			'title'      => $title,
 			'capability' => $capability,
 			'slug'       => $slug,
 			'url'        => self::get_callback_url( $url ),
-			'icon'       => $icon,
 			'order'      => $order,
 			'migrate'    => $migrate,
 		);
@@ -160,17 +151,20 @@ class Menu {
 	 * @param string $capability WordPress capability.
 	 * @param string $slug Menu slug.
 	 * @param string $url URL or menu callback.
-	 * @param string $icon Menu icon.
 	 * @param int    $order Menu order.
 	 * @param bool   $migrate Migrate the menu option and hide the old one.
 	 */
-	public static function add_item( $parent_slug, $title, $capability, $slug, $url = null, $icon = null, $order = null, $migrate = true ) {
-		self::$menu_items[ $parent_slug ][] = array(
+	public static function add_item( $parent_slug, $title, $capability, $slug, $url = null, $order = null, $migrate = true ) {
+		if ( isset( self::$menu_items[ $slug ] ) ) {
+			return;
+		}
+
+		self::$menu_items[ $slug ] = array(
+			'parent'     => $parent_slug,
 			'title'      => $title,
 			'capability' => $capability,
 			'slug'       => $slug,
 			'url'        => self::get_callback_url( $url ),
-			'icon'       => $icon,
 			'order'      => $order,
 			'migrate'    => $migrate,
 		);
@@ -260,6 +254,15 @@ class Menu {
 	}
 
 	/**
+	 * Get registered menu items.
+	 *
+	 * @return array
+	 */
+	public static function get_items() {
+		return apply_filters( 'woocommerce_navigation_menu_items', self::$menu_items );
+	}
+
+	/**
 	 * Add the menu to the page output.
 	 *
 	 * @param array $menu Menu items.
@@ -268,26 +271,14 @@ class Menu {
 	public function enqueue_data( $menu ) {
 		global $submenu, $parent_file, $typenow, $self;
 
-		$categories = self::$categories;
-		foreach ( $categories as $index => $category ) {
-			if ( $category[ 'capability' ] && ! current_user_can( $category[ 'capability' ] ) ) {
-				unset( $categories[ $index ] );
-				continue;
-			}
-
-			$categories[ $index ]['children'] = array();
-			if( isset( self::$menu_items[ $category['slug'] ] ) ) {
-				foreach ( self::$menu_items[ $category['slug'] ] as $item ) {
-					if ( $item[ 'capability' ] && ! current_user_can( $item[ 'capability' ] ) ) {
-						continue;
-					}
-
-					$categories[ $index ]['children'][] = $item;
-				}
+		$menu_items = self::get_items();
+		foreach ( $menu_items as $index => $menu_item ) {
+			if ( $menu_item[ 'capability' ] && ! current_user_can( $menu_item[ 'capability' ] ) ) {
+				unset( $menu_items[ $index ] );
 			}
 		}
 
-		wp_add_inline_script( 'woocommerce-navigation', 'window.wcNavigation = ' . wp_json_encode( $categories ), 'before' );
+		wp_add_inline_script( 'woocommerce-navigation', 'window.wcNavigation = ' . wp_json_encode( array_values( $menu_items ) ), 'before' );
 
 		return $menu;
 	}

@@ -3,6 +3,11 @@
  */
 import { Component } from '@wordpress/element';
 
+/**
+ * Internal dependencies
+ */
+import Menu from './Menu';
+
 export default class Navigation extends Component {
 	componentDidMount() {
 		// Collapse the original WP Menu.
@@ -10,52 +15,10 @@ export default class Navigation extends Component {
 		adminMenu.classList.add( 'folded' );
 	}
 
-	getMenuItems() {
-		// @todo This should be updated to use a wp data store.
-		return window.wcNavigation || [];
-	}
-
-	getCategories() {
-		return this.getMenuItems().filter( ( item ) => ! item.parent );
-	}
-
-	getChildren( slug ) {
-		if ( ! slug ) {
-			return [];
-		}
-
-		return this.getMenuItems().filter( ( item ) => item.parent === slug );
-	}
-
-	renderMenuItem( item, depth = 0 ) {
-		const { slug, title, url } = item;
-		const children = this.getChildren( slug );
-
-		return (
-			<li
-				key={ slug }
-				className={ `woocommerce-navigation__menu-item woocommerce-navigation__menu-item-depth-${ depth }` }
-			>
-				<a href={ url }>{ title }</a>
-				{ children.length && (
-					<ul className="woocommerce-navigation__submenu">
-						{ children.map( ( childItem ) => {
-							return this.renderMenuItem( childItem, depth + 1 );
-						} ) }
-					</ul>
-				) }
-			</li>
-		);
-	}
-
 	render() {
 		return (
 			<div className="woocommerce-navigation">
-				<ul className="woocommerce-navigation__menu">
-					{ this.getCategories().map( ( item ) => {
-						return this.renderMenuItem( item );
-					} ) }
-				</ul>
+				<Menu />
 			</div>
 		);
 	}

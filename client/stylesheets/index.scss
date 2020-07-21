@@ -12,9 +12,13 @@
 	position: fixed;
 	top: $admin-bar-height;
 	left: 0;
-	width: 160px;
+	width: 272px;
 	height: 100%;
 	background: var(--wp-admin-sidebar-color);
+}
+
+#wpcontent, #wpfooter {
+    margin-left: 272px;
 }
 
 .woocommerce-navigation__menu-item {

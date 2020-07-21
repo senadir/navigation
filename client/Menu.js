@@ -1,14 +1,10 @@
 /**
  * Internal dependencies
  */
+import { getMenuItems } from './utils';
 import MenuItem from "./MenuItem";
 
 export default function Menu() {
-	const getMenuItems = () => {
-		// @todo This should be updated to use a wp data store.
-		return window.wcNavigation || [];
-	}
-
 	const getCategories = () => {
 		return getMenuItems().filter( ( item ) => ! item.parent );
 	}

@@ -1,9 +1,9 @@
-export default function MenuItem( { slug, url, title } ) {
-	const getMenuItems = () => {
-		// @todo This should be updated to use a wp data store.
-		return window.wcNavigation || [];
-	}
+/**
+ * Internal dependencies
+ */
+import { getMenuItems } from './utils';
 
+export default function MenuItem( { slug, url, title } ) {
 	const getChildren = ( slug ) => {
 		if ( ! slug ) {
 			return [];

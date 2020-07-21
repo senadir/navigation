@@ -7,31 +7,5 @@
 @import '_variables.scss';
 @import '_mixins.scss';
 
-.woocommerce-navigation {
-	color: initial;
-	position: fixed;
-	top: $admin-bar-height;
-	left: 0;
-	width: 272px;
-	height: 100%;
-	background: var(--wp-admin-sidebar-color);
-}
-
-#wpcontent, #wpfooter {
-    margin-left: 272px;
-}
-
-.woocommerce-navigation__menu-item {
-	padding: $gap-smaller 0;
-}
-
-.has-woocommerce-navigation {
-	#adminmenuwrap,
-	#adminmenuback {
-		display: none !important;
-	}
-}
-
-.toplevel_page_woocommerce ul.wp-submenu {
-	display: none;
-}
+@import '../menu-item/style.scss';
+@import '../navigation/style.scss';

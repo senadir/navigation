@@ -1,8 +1,8 @@
 /**
  * Internal dependencies
  */
-import { getMenuItems } from './utils';
-import MenuItem from "./MenuItem";
+import { getMenuItems } from '../utils';
+import MenuItem from "../menu-item";
 
 export default function Menu() {
 	const getCategories = () => {

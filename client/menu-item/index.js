@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { getMenuItems } from './utils';
+import { getMenuItems } from '../utils';
 
 export default function MenuItem( { slug, url, title } ) {
 	const getChildren = ( slug ) => {

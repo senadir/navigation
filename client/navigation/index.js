@@ -1,25 +1,23 @@
 /**
  * External dependencies
  */
-import { Component } from '@wordpress/element';
+import { useEffect } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
 import Menu from '../menu';
 
-export default class Navigation extends Component {
-	componentDidMount() {
+export default function Navigation() {
+	useEffect(() => {
 		// Collapse the original WP Menu.
 		const adminMenu = document.getElementById( 'adminmenumain' );
 		adminMenu.classList.add( 'folded' );
-	}
+	});
 
-	render() {
-		return (
-			<div className="woocommerce-navigation">
-				<Menu />
-			</div>
-		);
-	}
+	return (
+		<div className="woocommerce-navigation">
+			<Menu />
+		</div>
+	);
 }

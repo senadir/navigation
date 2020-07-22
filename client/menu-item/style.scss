@@ -1,3 +1,19 @@
 .woocommerce-navigation__menu-item {
-	padding: $gap-smaller 0;
+	padding: 9px 0;
+	margin: 0;
+	font-size: 16px;
+	line-height: 1.4;
+
+	a {
+		text-decoration: none;
+		color: #6C7781;
+
+		&:hover {
+			color: #8F98A1
+		}
+	}
+
+	> .woocommerce-navigation__submenu {
+		display: none;
+	}
 }

@@ -7,7 +7,7 @@ const reducer = (
 	state = {
 		activeItem: null,
 		menus: {
-			primary: window.wcNavigation,
+			primary: window.wcNavigation || [],
 			secondary: [],
 		},
 	},
@@ -17,7 +17,7 @@ const reducer = (
 		case TYPES.SET_ACTIVE_ITEM:
 			state = {
 				...state,
-				...activeItem,
+				activeItem,
 			};
 			break;
 		case TYPES.SET_MENU_ITEMS:

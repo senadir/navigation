@@ -7,7 +7,7 @@ const reducer = (
 	state = {
 		activeItem: null,
 		menus: {
-			primary: [],
+			primary: window.wcNavigation,
 			secondary: [],
 		},
 	},

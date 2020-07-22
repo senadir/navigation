@@ -16,21 +16,19 @@ class Navigation extends Component {
 		adminMenu.classList.add( 'folded' );
 	}
 
-	getMenuItems() {
-		// @todo This should be updated to use a wp data store.
-		return window.wcNavigation || [];
-	}
-
 	getCategories() {
-		return this.getMenuItems().filter( ( item ) => ! item.parent );
+		const { primaryMenuItems } = this.props;
+		return primaryMenuItems.filter( ( item ) => ! item.parent );
 	}
 
 	getChildren( id ) {
+		const { primaryMenuItems } = this.props;
+
 		if ( ! id ) {
 			return [];
 		}
 
-		return this.getMenuItems().filter( ( item ) => item.parent === id );
+		return primaryMenuItems.filter( ( item ) => item.parent === id );
 	}
 
 	renderMenuItem( item, depth = 0 ) {

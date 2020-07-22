@@ -52,11 +52,13 @@ class CoreMenu {
 		}
 		foreach ( $settings as $key => $setting ) {
 			Menu::add_item(
-				'settings',
-				$setting,
-				'manage_woocommerce',
-				$key,
-				'admin.php?page=wc-status&tab=' . $key
+				array(
+					'parent'     => 'settings',
+					'title'      => $setting,
+					'capability' => 'manage_woocommerce',
+					'id'         => $key,
+					'url'        => 'admin.php?page=wc-settings&tab=' . $key,
+				)
 			);
 		}
 	}
@@ -74,96 +76,102 @@ class CoreMenu {
 		Menu::add_post_type_category( 'product' );
 
 		// Marketing category.
-		// @todo This should check if the marketing feature from WCA is active
-		// and allow that plugin to configure this menu item if so.
 		Menu::add_category(
-			__( 'Marketing', 'woocommerce-navigation' ),
-			'manage_woocommerce',
-			'marketing',
-			null,
-			null,
-			null,
-			false
+			array(
+				'title'      => __( 'Marketing', 'woocommerce-navigation' ),
+				'capability' => 'manage_woocommerce',
+				'id'         => 'woocommerce-marketing',
+			)
 		);
-		Screen::register_post_type( 'shop_coupon', 'marketing' );
+		Screen::register_post_type( 'shop_coupon', 'woocommerce-marketing' );
 
 		// Extensions category.
 		Menu::add_category(
-			__( 'Extensions', 'woocommerce-navigation' ),
-			'activate_plugins',
-			'extensions',
-			'plugins.php',
-			null,
-			null,
-			false
+			array(
+				'title'      => __( 'Extensions', 'woocommerce-navigation' ),
+				'capability' => 'activate_plugins',
+				'id'         => 'extensions',
+				'url'        => 'plugins.php',
+				'migrate'    => 'false',
+			)
 		);
 		Menu::add_item(
-			'extensions',
-			__( 'My extensions', 'woocommerce-navigation' ),
-			'manage_woocommerce',
-			'my-extensions',
-			'plugins.php',
-			null,
-			null,
-			false
+			array(
+				'parent'     => 'extensions',
+				'title'      => __( 'My extensions', 'woocommerce-navigation' ),
+				'capability' => 'manage_woocommerce',
+				'id'         => 'my-extensions',
+				'url'        => 'plugins.php',
+				'migrate'    => 'false',
+			)
 		);
 		Menu::add_item(
-			'extensions',
-			__( 'Marketplace', 'woocommerce-navigation' ),
-			'manage_woocommerce',
-			'marketplace',
-			'wc-addons'
+			array(
+				'parent'     => 'extensions',
+				'title'      => __( 'Marketplace', 'woocommerce-navigation' ),
+				'capability' => 'manage_woocommerce',
+				'id'         => 'marketplace',
+				'url'        => 'wc-addons',
+			)
 		);
 
 		// Settings category.
 		Menu::add_category(
-			__( 'Settings', 'woocommerce-navigation' ),
-			'manage_woocommerce',
-			'settings',
-			'wc-settings'
+			array(
+				'title'      => __( 'Settings', 'woocommerce-navigation' ),
+				'capability' => 'manage_woocommerce',
+				'id'         => 'settings',
+				'url'        => 'wc-settings',
+			)
 		);
 
 		// Tools category.
 		Menu::add_category(
-			__( 'Tools', 'woocommerce-navigation' ),
-			'manage_woocommerce',
-			'tools',
-			'wc-status'
+			array(
+				'title'      => __( 'Tools', 'woocommerce-navigation' ),
+				'capability' => 'manage_woocommerce',
+				'id'         => 'tools',
+				'url'        => 'wc-status',
+			)
 		);
 		Menu::add_item(
-			'tools',
-			__( 'System status', 'woocommerce-navigation' ),
-			'manage_woocommerce',
-			'system-status',
-			'wc-status'
+			array(
+				'parent'     => 'tools',
+				'title'      => __( 'System status', 'woocommerce-navigation' ),
+				'capability' => 'manage_woocommerce',
+				'id'         => 'system-status',
+				'url'        => 'wc-status',
+			)
 		);
 		Menu::add_item(
-			'tools',
-			__( 'Import / Export', 'woocommerce-navigation' ),
-			'import',
-			'import-export',
-			'import.php',
-			null,
-			null,
-			false
+			array(
+				'parent'     => 'tools',
+				'title'      => __( 'Import / Export', 'woocommerce-navigation' ),
+				'capability' => 'import',
+				'id'         => 'import-export',
+				'url'        => 'import.php',
+				'migrate'    => 'false',
+			)
 		);
 		Menu::add_item(
-			'tools',
-			__( 'Utilities', 'woocommerce-navigation' ),
-			'manage_woocommerce',
-			'utilities',
-			'admin.php?page=wc-status&tab=tools'
+			array(
+				'parent'     => 'tools',
+				'title'      => __( 'Utilities', 'woocommerce-navigation' ),
+				'capability' => 'manage_woocommerce',
+				'id'         => 'utilities',
+				'url'        => 'admin.php?page=wc-status&tab=tools',
+			)
 		);
 
 		// User profile.
 		Menu::add_category(
-			wp_get_current_user()->user_login,
-			'read',
-			'profile',
-			'profile.php',
-			null,
-			null,
-			false
+			array(
+				'title'      => wp_get_current_user()->user_login,
+				'capability' => 'read',
+				'id'         => 'profile',
+				'url'        => 'profile.php',
+				'migrate'    => 'false',
+			)
 		);
 	}
 
@@ -186,11 +194,13 @@ class CoreMenu {
 			}
 
 			Menu::add_item(
-				'settings',
-				$menu_item[0],
-				$menu_item[1],
-				sanitize_title( $menu_item[0] ),
-				$menu_item[2]
+				array(
+					'parent'     => 'settings',
+					'title'      => $menu_item[0],
+					'capability' => $menu_item[1],
+					'id'         => sanitize_title( $menu_item[0] ),
+					'url'        => $menu_item[2],
+				)
 			);
 		}
 

@@ -19,21 +19,21 @@ export default class Navigation extends Component {
 		return this.getMenuItems().filter( ( item ) => ! item.parent );
 	}
 
-	getChildren( slug ) {
-		if ( ! slug ) {
+	getChildren( id ) {
+		if ( ! id ) {
 			return [];
 		}
 
-		return this.getMenuItems().filter( ( item ) => item.parent === slug );
+		return this.getMenuItems().filter( ( item ) => item.parent === id );
 	}
 
 	renderMenuItem( item, depth = 0 ) {
-		const { slug, title, url } = item;
-		const children = this.getChildren( slug );
+		const { id, title, url } = item;
+		const children = this.getChildren( id );
 
 		return (
 			<li
-				key={ slug }
+				key={ id }
 				className={ `woocommerce-navigation__menu-item woocommerce-navigation__menu-item-depth-${ depth }` }
 			>
 				<a href={ url }>{ title }</a>

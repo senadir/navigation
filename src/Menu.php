@@ -127,53 +127,75 @@ class Menu {
 	/**
 	 * Adds a top level menu item to the navigation.
 	 *
-	 * @param string $title Menu title.
-	 * @param string $capability WordPress capability.
-	 * @param string $slug Menu slug.
-	 * @param string $url URL or menu callback.
-	 * @param int    $order Menu order.
-	 * @param bool   $migrate Migrate the menu option and hide the old one.
+	 * @param array $args Array containing the necessary arguments.
+	 *    $args = array(
+	 *      'id'         => (string) The unique ID of the menu item. Required.
+	 *      'title'      => (string) Title of the menu item. Required.
+	 *      'capability' => (string) Capability to view this menu item.
+	 *      'url'        => (string) URL or callback to be used. Required.
+	 *      'order'      => (int) Menu item order.
+	 *      'migrate'    => (bool) Whether or not to hide the item in the wp admin menu.
+	 *    ).
 	 */
-	public static function add_category( $title, $capability, $slug, $url = null, $order = null, $migrate = true ) {
-		self::$menu_items[ $slug ] = array(
-			'title'      => $title,
-			'capability' => $capability,
-			'slug'       => $slug,
-			'url'        => self::get_callback_url( $url ),
-			'order'      => $order,
-			'migrate'    => $migrate,
-		);
+	public static function add_category( $args ) {
+		if ( ! isset( $args['id'] ) || isset( self::$menu_items[ $args['id'] ] ) ) {
+			return;
+		}
 
-		self::$callbacks[ $url ] = $migrate;
+		$defaults         = array(
+			'id'         => '',
+			'title'      => '',
+			'capability' => 'manage_woocommerce',
+			'url'        => '',
+			'order'      => 10,
+			'migrate'    => true,
+		);
+		$menu_item        = wp_parse_args( $args, $defaults );
+		$menu_item['url'] = self::get_callback_url( $menu_item['url'] );
+
+		self::$menu_items[ $menu_item['id'] ] = $menu_item;
+
+		if ( isset( $args['url'] ) ) {
+			self::$callbacks[ $args['url'] ] = $menu_item['migrate'];
+		}
 	}
 
 	/**
 	 * Adds a child menu item to the navigation.
 	 *
-	 * @param string $parent_slug Parent item slug.
-	 * @param string $title Menu title.
-	 * @param string $capability WordPress capability.
-	 * @param string $slug Menu slug.
-	 * @param string $url URL or menu callback.
-	 * @param int    $order Menu order.
-	 * @param bool   $migrate Migrate the menu option and hide the old one.
+	 * @param array $args Array containing the necessary arguments.
+	 *    $args = array(
+	 *      'id'         => (string) The unique ID of the menu item. Required.
+	 *      'title'      => (string) Title of the menu item. Required.
+	 *      'parent'     => (string) Parent menu item ID.
+	 *      'capability' => (string) Capability to view this menu item.
+	 *      'url'        => (string) URL or callback to be used. Required.
+	 *      'order'      => (int) Menu item order.
+	 *      'migrate'    => (bool) Whether or not to hide the item in the wp admin menu.
+	 *    ).
 	 */
-	public static function add_item( $parent_slug, $title, $capability, $slug, $url = null, $order = null, $migrate = true ) {
-		if ( isset( self::$menu_items[ $slug ] ) ) {
+	public static function add_item( $args ) {
+		if ( ! isset( $args['id'] ) || isset( self::$menu_items[ $args['id'] ] ) ) {
 			return;
 		}
 
-		self::$menu_items[ $slug ] = array(
-			'parent'     => $parent_slug,
-			'title'      => $title,
-			'capability' => $capability,
-			'slug'       => $slug,
-			'url'        => self::get_callback_url( $url ),
-			'order'      => $order,
-			'migrate'    => $migrate,
+		$defaults         = array(
+			'id'         => '',
+			'title'      => '',
+			'parent'     => 'settings',
+			'capability' => 'manage_woocommerce',
+			'url'        => '',
+			'order'      => 10,
+			'migrate'    => true,
 		);
+		$menu_item        = wp_parse_args( $args, $defaults );
+		$menu_item['url'] = self::get_callback_url( $menu_item['url'] );
 
-		self::$callbacks[ $url ] = $migrate;
+		self::$menu_items[ $menu_item['id'] ] = $menu_item;
+
+		if ( isset( $args['url'] ) ) {
+			self::$callbacks[ $args['url'] ] = $menu_item['migrate'];
+		}
 	}
 
 	/**
@@ -189,24 +211,30 @@ class Menu {
 		}
 
 		self::add_category(
-			esc_attr( $post_type_object->labels->menu_name ),
-			$post_type_object->cap->edit_posts,
-			$post_type,
-			"edit.php?post_type={$post_type}"
+			array(
+				'title'      => esc_attr( $post_type_object->labels->menu_name ),
+				'capability' => $post_type_object->cap->edit_posts,
+				'id'         => $post_type,
+				'url'        => "edit.php?post_type={$post_type}",
+			)
 		);
 		self::add_item(
-			$post_type,
-			esc_attr( $post_type_object->labels->all_items ),
-			$post_type_object->cap->edit_posts,
-			"{$post_type}-all-items",
-			"edit.php?post_type={$post_type}"
+			array(
+				'parent'     => $post_type,
+				'title'      => esc_attr( $post_type_object->labels->all_items ),
+				'capability' => $post_type_object->cap->edit_posts,
+				'id'         => "{$post_type}-all-items",
+				'url'        => "edit.php?post_type={$post_type}",
+			)
 		);
 		self::add_item(
-			$post_type,
-			esc_attr( $post_type_object->labels->add_new ),
-			$post_type_object->cap->create_posts,
-			"{$post_type}-add-new",
-			"post-new.php?post_type={$post_type}"
+			array(
+				'parent'     => $post_type,
+				'title'      => esc_attr( $post_type_object->labels->add_new ),
+				'capability' => $post_type_object->cap->create_posts,
+				'id'         => "{$post_type}-add-new",
+				'url'        => "post-new.php?post_type={$post_type}",
+			)
 		);
 	}
 

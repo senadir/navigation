@@ -38,10 +38,16 @@ class WC_Tests_Navigation_Screen extends WC_REST_Unit_Test_Case {
 	 * Test that post types can be registered.
 	 */
 	public function test_register_post_types() {
+		register_post_type(
+			'custom-post-type',
+			array(
+				'show_in_menu' => true,
+				'show_ui'      => true,
+			)
+		);
 		Screen::register_post_type( 'custom-post-type', 'test-category' );
 		$this->assertContains( 'custom-post-type', Screen::get_post_types() );
-		// @todo Uncomment this line after https://github.com/woocommerce/navigation/pull/35 is merged.
-		// $this->assertArrayHasKey( 'custom-post-type', Menu::instance()::get_items() );
+		$this->assertArrayHasKey( 'custom-post-type', Menu::instance()::get_items() );
 	}
 
 	/**

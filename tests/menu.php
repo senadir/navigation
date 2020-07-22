@@ -16,18 +16,20 @@ class WC_Tests_Navigation_Menu extends WC_REST_Unit_Test_Case {
 	 */
 	public function test_add_menu_items() {
 		Menu::add_category(
-			'Test Category',
-			'manage_woocommerce',
-			'test-category',
-			''
+			array(
+				'title'      => 'Test Category',
+				'capability' => 'manage_woocommerce',
+				'id'         => 'test-category',
+			)
 		);
 
 		Menu::add_item(
-			'test-category',
-			'Test Item',
-			'manage_woocommerce',
-			'test-item',
-			''
+			array(
+				'parent'     => 'test-category',
+				'title'      => 'Test Item',
+				'capability' => 'manage_woocommerce',
+				'id'         => 'test-item',
+			)
 		);
 
 		$menu_items = Menu::instance()::get_items();
@@ -37,7 +39,7 @@ class WC_Tests_Navigation_Menu extends WC_REST_Unit_Test_Case {
 		$this->assertArrayHasKey( 'parent', $menu_items['test-item'] );
 		$this->assertArrayHasKey( 'title', $menu_items['test-item'] );
 		$this->assertArrayHasKey( 'capability', $menu_items['test-item'] );
-		$this->assertArrayHasKey( 'slug', $menu_items['test-item'] );
+		$this->assertArrayHasKey( 'id', $menu_items['test-item'] );
 		$this->assertArrayHasKey( 'url', $menu_items['test-item'] );
 		$this->assertArrayHasKey( 'order', $menu_items['test-item'] );
 		$this->assertArrayHasKey( 'migrate', $menu_items['test-item'] );
@@ -46,13 +48,14 @@ class WC_Tests_Navigation_Menu extends WC_REST_Unit_Test_Case {
 	/**
 	 * Test adding a menu item that has already been added.
 	 */
-	public function test_duplicate_menu_slug() {
+	public function test_duplicate_menu_id() {
 		Menu::add_item(
-			'test-category',
-			'Test Item',
-			'manage_woocommerce',
-			'test-item',
-			''
+			array(
+				'parent'     => 'test-category',
+				'title'      => 'Test Item',
+				'capability' => 'manage_woocommerce',
+				'id'         => 'test-item',
+			)
 		);
 
 		$this->assertEquals( 2, count( Menu::instance()::get_items() ) );
@@ -63,10 +66,12 @@ class WC_Tests_Navigation_Menu extends WC_REST_Unit_Test_Case {
 	 */
 	public function test_callback_url() {
 		Menu::add_category(
-			__( 'Test Page', 'woocommerce-navigation' ),
-			'manage_woocommerce',
-			'test-plugins',
-			'wc-test'
+			array(
+				'title'      => 'Test Page',
+				'capability' => 'manage_woocommerce',
+				'id'         => 'test-plugins',
+				'url'        => 'wc-test',
+			)
 		);
 
 		$url = Menu::instance()::get_items()['test-plugins']['url'];

@@ -53,5 +53,8 @@
 				"*.php": [
 						"npm run lint:php"
 				]
+		},
+		"dependencies": {
+				"@wordpress/data": "^4.22.2"
 		}
 }

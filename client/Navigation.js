@@ -2,8 +2,14 @@
  * External dependencies
  */
 import { Component } from '@wordpress/element';
+import { compose } from '@wordpress/compose';
+import { withSelect } from '@wordpress/data';
 
-export default class Navigation extends Component {
+/**
+ * Internal dependencies
+ */
+import { NAVIGATION_STORE_NAME } from './store';
+class Navigation extends Component {
 	componentDidMount() {
 		// Collapse the original WP Menu.
 		const adminMenu = document.getElementById( 'adminmenumain' );
@@ -60,3 +66,15 @@ export default class Navigation extends Component {
 		);
 	}
 }
+
+export default compose(
+	withSelect( ( select ) => {
+		const { getActiveItem, getMenuItems } = select( NAVIGATION_STORE_NAME );
+
+		return {
+			activeItem: getActiveItem(),
+			primaryMenuItems: getMenuItems( 'primary' ),
+			secondaryMenuItems: getMenuItems( 'secondary' ),
+		};
+	} )
+)( Navigation );

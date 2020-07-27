@@ -92,7 +92,7 @@ class CoreMenu {
 				'capability' => 'activate_plugins',
 				'id'         => 'extensions',
 				'url'        => 'plugins.php',
-				'migrate'    => 'false',
+				'migrate'    => false,
 			)
 		);
 		Menu::add_item(
@@ -102,7 +102,7 @@ class CoreMenu {
 				'capability' => 'manage_woocommerce',
 				'id'         => 'my-extensions',
 				'url'        => 'plugins.php',
-				'migrate'    => 'false',
+				'migrate'    => false,
 			)
 		);
 		Menu::add_item(
@@ -150,7 +150,7 @@ class CoreMenu {
 				'capability' => 'import',
 				'id'         => 'import-export',
 				'url'        => 'import.php',
-				'migrate'    => 'false',
+				'migrate'    => false,
 			)
 		);
 		Menu::add_item(
@@ -170,7 +170,7 @@ class CoreMenu {
 				'capability' => 'read',
 				'id'         => 'profile',
 				'url'        => 'profile.php',
-				'migrate'    => 'false',
+				'migrate'    => false,
 			)
 		);
 	}

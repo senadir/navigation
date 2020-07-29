@@ -12,5 +12,6 @@ echo "linting"
 	npm run lint:js client/**/*.js client/*.js
 echo "building"
 	npm run build
+echo "testing"
 	npm run test:unit
 fi

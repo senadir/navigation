@@ -7,7 +7,7 @@ echo "starting"
 
 if [[ ${RUN_JS} == 1 ]]; then
 echo "install"
-	npm run -s install-if-deps-outdated
+	npm install
 echo "linting"
 	npm run lint:js client/**/*.js client/*.js
 echo "building"

@@ -12,4 +12,7 @@ import Navigation from './navigation';
 const navigationRoot = document.getElementById(
 	'woocommerce-embedded-navigation'
 );
-render( <Navigation />, navigationRoot );
+
+if ( navigationRoot ) {
+	render( <Navigation />, navigationRoot );
+}

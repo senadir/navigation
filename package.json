@@ -55,6 +55,6 @@
 				]
 		},
 		"dependencies": {
-				"@wordpress/data": "^4.22.2"
+				"@wordpress/data": "4.22.3"
 		}
 }

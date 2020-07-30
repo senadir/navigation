@@ -10,10 +10,16 @@ export function setActiveItem( activeItem ) {
 	};
 }
 
-export function setMenuItems( menuId, menuItems ) {
+export function setMenuItems( menuItems ) {
 	return {
-		type: TYPES.SET_ACTIVE_ITEM,
-		menuId,
+		type: TYPES.SET_MENU_ITEMS,
+		menuItems,
+	};
+}
+
+export function addMenuItems( menuItems ) {
+	return {
+		type: TYPES.ADD_MENU_ITEMS,
 		menuItems,
 	};
 }

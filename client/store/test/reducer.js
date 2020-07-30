@@ -1,15 +1,13 @@
 /**
  * Internal dependencies
  */
+import { getMenuItems } from '../selectors';
 import reducer from '../reducer';
 import TYPES from '../action-types';
 
 const defaultState = {
 	activeItem: null,
-	menus: {
-		primary: [],
-		secondary: [],
-	},
+	menuItems: [],
 };
 
 describe( 'navigation reducer', () => {
@@ -22,23 +20,59 @@ describe( 'navigation reducer', () => {
 	it( "should set a menu's items", () => {
 		const state = reducer( defaultState, {
 			type: TYPES.SET_MENU_ITEMS,
-			menuId: 'primary',
 			menuItems: [
 				{
 					id: 'menu-item-1',
 					title: 'Menu Item 1',
+					menuId: 'primary',
 				},
 				{
 					id: 'menu-item-2',
 					title: 'Menu Item 2',
+					menuId: 'primary',
+				},
+				{
+					id: 'menu-item-3',
+					title: 'Menu Item 3',
+					menuId: 'secondary',
 				},
 			],
 		} );
 
-		expect( state.menus.primary.length ).toBe( 2 );
-		expect( state.menus.primary[ 0 ].id ).toBe( 'menu-item-1' );
-		expect( state.menus.primary[ 1 ].id ).toBe( 'menu-item-2' );
-		expect( state.menus.secondary.length ).toBe( 0 );
+		expect( state.menuItems.length ).toBe( 3 );
+		expect( state.menuItems[ 0 ].id ).toBe( 'menu-item-1' );
+		expect( state.menuItems[ 1 ].id ).toBe( 'menu-item-2' );
+		expect( state.menuItems[ 2 ].id ).toBe( 'menu-item-3' );
+		expect( getMenuItems( state, 'primary' ).length ).toBe( 2 );
+		expect( getMenuItems( state, 'secondary' ).length ).toBe( 1 );
+	} );
+
+	it( 'should add menu items', () => {
+		const state = reducer(
+			{
+				menuItems: [
+					{
+						id: 'menu-item-1',
+						title: 'Menu Item 1',
+						menuId: 'primary',
+					},
+				],
+			},
+			{
+				type: TYPES.ADD_MENU_ITEMS,
+				menuItems: [
+					{
+						id: 'menu-item-2',
+						title: 'Menu Item 2',
+						menuId: 'primary',
+					},
+				],
+			}
+		);
+
+		expect( state.menuItems.length ).toBe( 2 );
+		expect( state.menuItems[ 0 ].id ).toBe( 'menu-item-1' );
+		expect( state.menuItems[ 1 ].id ).toBe( 'menu-item-2' );
 	} );
 
 	it( 'should set the active menu item', () => {

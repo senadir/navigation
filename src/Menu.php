@@ -135,6 +135,7 @@ class Menu {
 	 *      'url'        => (string) URL or callback to be used. Required.
 	 *      'order'      => (int) Menu item order.
 	 *      'migrate'    => (bool) Whether or not to hide the item in the wp admin menu.
+	 *      'menuId'     => (string) The ID of the menu to add the category to.
 	 *    ).
 	 */
 	public static function add_category( $args ) {
@@ -149,6 +150,7 @@ class Menu {
 			'url'        => '',
 			'order'      => 10,
 			'migrate'    => true,
+			'menuId'     => 'primary',
 		);
 		$menu_item        = wp_parse_args( $args, $defaults );
 		$menu_item['url'] = self::get_callback_url( $menu_item['url'] );
@@ -172,6 +174,7 @@ class Menu {
 	 *      'url'        => (string) URL or callback to be used. Required.
 	 *      'order'      => (int) Menu item order.
 	 *      'migrate'    => (bool) Whether or not to hide the item in the wp admin menu.
+	 *      'menuId'     => (string) The ID of the menu to add the item to.
 	 *    ).
 	 */
 	public static function add_item( $args ) {
@@ -187,6 +190,7 @@ class Menu {
 			'url'        => '',
 			'order'      => 10,
 			'migrate'    => true,
+			'menuId'     => 'primary',
 		);
 		$menu_item        = wp_parse_args( $args, $defaults );
 		$menu_item['url'] = self::get_callback_url( $menu_item['url'] );
@@ -310,7 +314,11 @@ class Menu {
 			}
 		}
 
-		wp_add_inline_script( 'woocommerce-navigation', 'window.wcNavigation = ' . wp_json_encode( array_values( $menu_items ) ), 'before' );
+		$data = array(
+			'menuItems' => array_values( $menu_items ),
+		);
+
+		wp_add_inline_script( 'woocommerce-navigation', 'window.wcNavigation = ' . wp_json_encode( $data ), 'before' );
 
 		return $menu;
 	}

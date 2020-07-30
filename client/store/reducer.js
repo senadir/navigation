@@ -6,12 +6,12 @@ import TYPES from './action-types';
 const reducer = (
 	state = {
 		activeItem: null,
-		menus: {
-			primary: window.wcNavigation || [],
-			secondary: [],
-		},
+		menuItems:
+			window.wcNavigation && window.wcNavigation.menuItems
+				? window.wcNavigation.menuItems
+				: [],
 	},
-	{ type, activeItem, menuId, menuItems }
+	{ type, activeItem, menuItems }
 ) => {
 	switch ( type ) {
 		case TYPES.SET_ACTIVE_ITEM:
@@ -23,10 +23,13 @@ const reducer = (
 		case TYPES.SET_MENU_ITEMS:
 			state = {
 				...state,
-				menus: {
-					...state.menus,
-					[ menuId ]: menuItems,
-				},
+				menuItems,
+			};
+			break;
+		case TYPES.ADD_MENU_ITEMS:
+			state = {
+				...state,
+				menuItems: [ ...state.menuItems, ...menuItems ],
 			};
 			break;
 	}

@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 WORKING_DIR="$PWD"
-cd "$WP_CORE_DIR/wp-content/plugins/navigation/"
 if [[ {$COMPOSER_DEV} == 1 ]]; then
 	echo "composer dev"
 	./vendor/bin/phpunit --version
@@ -10,9 +9,8 @@ if [[ {$COMPOSER_DEV} == 1 ]]; then
 		./vendor/bin/phpunit -c phpunit.xml.dist
 	fi
 else
-	echo "not composer dev"
-	phpunit --version
-	phpunit -c phpunit.xml.dist
+	./vendor/bin/phpunit --version
+	./vendor/bin/phpunit -c phpunit.xml.dist
 fi
 TEST_RESULT=$?
 cd "$WORKING_DIR"

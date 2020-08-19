@@ -27,7 +27,7 @@
 				"@wordpress/eslint-plugin": "7.1.0",
 				"@wordpress/prettier-config": "0.3.0",
 				"@wordpress/scripts": "12.1.1",
-				"browserslist": "4.13.0",
+				"browserslist": "4.14.0",
 				"husky": "4.2.5",
 				"lint-staged": "10.2.11",
 				"prettier": "npm:wp-prettier@2.0.5",

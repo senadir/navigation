@@ -8,6 +8,7 @@ import {
 	__experimentalNavigation as Navigation,
 	__experimentalNavigationMenu as NavigationMenu,
 	__experimentalNavigationMenuItem as NavigationMenuItem,
+	__experimentalText as Text,
 	Button,
 } from '@wordpress/components';
 import { Icon, arrowLeft } from '@wordpress/icons';
@@ -28,6 +29,26 @@ const NavigationContainer = ( { menuItems } ) => {
 	const dashboardUrl =
 		window.wcNavigation && window.wcNavigation.dashboardUrl;
 
+	const renderMenu = ( items ) => {
+		if ( ! items.length ) {
+			return null;
+		}
+
+		return (
+			<NavigationMenu>
+				{ items.map( ( item ) => {
+					return (
+						<NavigationMenuItem
+							{ ...item }
+							href={ item.url }
+							key={ item.id }
+						/>
+					);
+				} ) }
+			</NavigationMenu>
+		);
+	};
+
 	return (
 		<div className="woocommerce-navigation">
 			<Navigation
@@ -36,14 +57,14 @@ const NavigationContainer = ( { menuItems } ) => {
 				rootTitle="Home"
 			>
 				{ ( { level, parentLevel, NavigationBackButton } ) => {
+					const primaryMenuItems = level.children.filter(
+						( item ) => item.menuId !== 'secondary'
+					);
+					const secondaryMenuItems = level.children.filter(
+						( item ) => item.menuId === 'secondary'
+					);
 					return (
 						<>
-							{ parentLevel && (
-								<NavigationBackButton>
-									<Icon icon={ arrowLeft } />
-									{ parentLevel.title }
-								</NavigationBackButton>
-							) }
 							{ ! parentLevel && dashboardUrl && (
 								<Button
 									isPrimary
@@ -57,35 +78,21 @@ const NavigationContainer = ( { menuItems } ) => {
 									) }
 								</Button>
 							) }
-							<h1>{ level.title }</h1>
-							<NavigationMenu>
-								{ level.children
-									.filter(
-										( item ) => item.menuId !== 'secondary'
-									)
-									.map( ( item ) => {
-										return (
-											<NavigationMenuItem
-												{ ...item }
-												key={ item.id }
-											/>
-										);
-									} ) }
-							</NavigationMenu>
-							<NavigationMenu>
-								{ level.children
-									.filter(
-										( item ) => item.menuId === 'secondary'
-									)
-									.map( ( item ) => {
-										return (
-											<NavigationMenuItem
-												{ ...item }
-												key={ item.id }
-											/>
-										);
-									} ) }
-							</NavigationMenu>
+							{ parentLevel && (
+								<NavigationBackButton className="woocommerce-navigation__back-button">
+									<Icon icon={ arrowLeft } />
+									{ parentLevel.title }
+								</NavigationBackButton>
+							) }
+							<Text
+								variant="title.small"
+								as="h1"
+								className="woocommerce-navigation__title"
+							>
+								{ level.title }
+							</Text>
+							{ renderMenu( primaryMenuItems ) }
+							{ renderMenu( secondaryMenuItems ) }
 						</>
 					);
 				} }

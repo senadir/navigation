@@ -1,7 +1,6 @@
 /**
  * Internal dependencies
  */
-import { getMenuItems } from '../selectors';
 import reducer from '../reducer';
 import TYPES from '../action-types';
 
@@ -43,8 +42,6 @@ describe( 'navigation reducer', () => {
 		expect( state.menuItems[ 0 ].id ).toBe( 'menu-item-1' );
 		expect( state.menuItems[ 1 ].id ).toBe( 'menu-item-2' );
 		expect( state.menuItems[ 2 ].id ).toBe( 'menu-item-3' );
-		expect( getMenuItems( state, 'primary' ).length ).toBe( 2 );
-		expect( getMenuItems( state, 'secondary' ).length ).toBe( 1 );
 	} );
 
 	it( 'should add menu items', () => {

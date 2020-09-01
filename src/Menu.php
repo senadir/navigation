@@ -315,7 +315,8 @@ class Menu {
 		}
 
 		$data = array(
-			'menuItems' => array_values( $menu_items ),
+			'menuItems'    => array_values( $menu_items ),
+			'dashboardUrl' => get_dashboard_url(),
 		);
 
 		wp_add_inline_script( 'woocommerce-navigation', 'window.wcNavigation = ' . wp_json_encode( $data ), 'before' );

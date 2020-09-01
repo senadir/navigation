@@ -1,12 +1,14 @@
 /**
  * External dependencies
  */
+import { __ } from '@wordpress/i18n';
 import { useEffect } from '@wordpress/element';
 import { compose } from '@wordpress/compose';
 import {
 	__experimentalNavigation as Navigation,
 	__experimentalNavigationMenu as NavigationMenu,
 	__experimentalNavigationMenuItem as NavigationMenuItem,
+	Button,
 } from '@wordpress/components';
 import { Icon, arrowLeft } from '@wordpress/icons';
 import { withSelect } from '@wordpress/data';
@@ -23,6 +25,9 @@ const NavigationContainer = ( { menuItems } ) => {
 		adminMenu.classList.add( 'folded' );
 	}, [] );
 
+	const dashboardUrl =
+		window.wcNavigation && window.wcNavigation.dashboardUrl;
+
 	return (
 		<div className="woocommerce-navigation">
 			<Navigation
@@ -38,6 +43,19 @@ const NavigationContainer = ( { menuItems } ) => {
 									<Icon icon={ arrowLeft } />
 									{ parentLevel.title }
 								</NavigationBackButton>
+							) }
+							{ ! parentLevel && dashboardUrl && (
+								<Button
+									isPrimary
+									href={ dashboardUrl }
+									className="woocommerce-navigation__back-button"
+								>
+									<Icon icon={ arrowLeft } />
+									{ __(
+										'WordPress Dashboard',
+										'woocommerce-navigation'
+									) }
+								</Button>
 							) }
 							<h1>{ level.title }</h1>
 							<NavigationMenu>

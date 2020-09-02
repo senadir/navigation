@@ -8,10 +8,9 @@ import {
 	__experimentalNavigation as Navigation,
 	__experimentalNavigationMenu as NavigationMenu,
 	__experimentalNavigationMenuItem as NavigationMenuItem,
-	__experimentalText as Text,
 	Button,
 } from '@wordpress/components';
-import { Icon, arrowLeft } from '@wordpress/icons';
+import { Icon, chevronLeft } from '@wordpress/icons';
 import { withSelect } from '@wordpress/data';
 
 /**
@@ -29,13 +28,14 @@ const NavigationContainer = ( { menuItems } ) => {
 	const dashboardUrl =
 		window.wcNavigation && window.wcNavigation.dashboardUrl;
 
-	const renderMenu = ( items ) => {
+	const renderMenu = ( items, level, rootTitle = null ) => {
 		if ( ! items.length ) {
 			return null;
 		}
 
+		const title = level.id === 'root' ? rootTitle : level.title;
 		return (
-			<NavigationMenu>
+			<NavigationMenu title={ title }>
 				{ items.map( ( item ) => {
 					return (
 						<NavigationMenuItem
@@ -67,11 +67,11 @@ const NavigationContainer = ( { menuItems } ) => {
 						<>
 							{ ! parentLevel && dashboardUrl && (
 								<Button
-									isPrimary
+									isTertiary
 									href={ dashboardUrl }
 									className="woocommerce-navigation__back-button"
 								>
-									<Icon icon={ arrowLeft } />
+									<Icon icon={ chevronLeft } />
 									{ __(
 										'WordPress Dashboard',
 										'woocommerce-navigation'
@@ -79,20 +79,16 @@ const NavigationContainer = ( { menuItems } ) => {
 								</Button>
 							) }
 							{ parentLevel && (
-								<NavigationBackButton className="woocommerce-navigation__back-button">
-									<Icon icon={ arrowLeft } />
+								<NavigationBackButton>
 									{ parentLevel.title }
 								</NavigationBackButton>
 							) }
-							<Text
-								variant="title.small"
-								as="h1"
-								className="woocommerce-navigation__title"
-							>
-								{ level.title }
-							</Text>
-							{ renderMenu( primaryMenuItems ) }
-							{ renderMenu( secondaryMenuItems ) }
+							{ renderMenu(
+								primaryMenuItems,
+								level,
+								__( 'WooCommerce', 'woocommerce-navigation' )
+							) }
+							{ renderMenu( secondaryMenuItems, level ) }
 						</>
 					);
 				} }

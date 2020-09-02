@@ -9,78 +9,16 @@
 @import '_colors.scss';
 
 .woocommerce-navigation {
-	color: initial;
 	position: fixed;
 	top: $admin-bar-height;
 	left: 0;
 	width: $navigation-width;
 	height: 100%;
-	background: var(--wp-admin-sidebar-color);
-	padding: $gap*2 0;
 	box-sizing: border-box;
-
-	.woocommerce-navigation__title {
-		color: $light-gray-700;
-		margin-top: 64px;
-		margin-left: $navigation-x-padding;
-		margin-right: $navigation-x-padding;
-		margin-bottom: $gap*2;
-	}
-
-	.components-navigation__back-button.is-primary {
-		background-color: lighten($dark-gray-800, 10%);
-		color: $dark-gray-100;
-		font-size: 12px;
-		line-height: 1;
-		height: 24px;
-		padding-left: 10px;
-		padding-right: 10px;
-		margin-left: $navigation-x-padding;
-		margin-right: $navigation-x-padding;
-		align-self: flex-start;
-
-		svg {
-			height: 15px;
-			margin-left: -5px;
-		}
-	}
-
-	.components-navigation__menu-item {
-		color: $dark-gray-100;
-		margin: 0;
-
-		a,
-		button {
-			padding: $gap-smaller $navigation-x-padding;
-			width: 100%;
-			height: 40px;
-
-			svg {
-				margin-left: $gap-smaller;
-			}
-		}
-
-		&.is-active {
-			a span,
-			button span {
-				font-weight: bold;
-			}
-		}
-	}
-
-	.components-navigation__menu-item-title {
-		font-size: 16px;
-		margin-right: auto;
-	}
-
-	.components-navigation__menu-item-badge {
-		background: #000;
-		font-size: 12px;
-		margin-left: $gap-smaller;
-	}
 
 	.components-navigation {
 		height: 100%;
+		box-sizing: border-box;
 	}
 
 	.components-navigation__level {

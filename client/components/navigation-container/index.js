@@ -17,6 +17,7 @@ import { withSelect } from '@wordpress/data';
  * Internal dependencies
  */
 import { NAVIGATION_STORE_NAME } from '../../store';
+import SiteTitle from '../site-title';
 
 const NavigationContainer = ( { menuItems } ) => {
 	useEffect( () => {
@@ -51,6 +52,7 @@ const NavigationContainer = ( { menuItems } ) => {
 
 	return (
 		<div className="woocommerce-navigation">
+			<SiteTitle />
 			<Navigation
 				activeItemId={ 'active' }
 				data={ menuItems }

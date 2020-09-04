@@ -7,6 +7,8 @@ import TYPES from '../action-types';
 const defaultState = {
 	activeItem: null,
 	menuItems: [],
+	siteTitle: null,
+	siteUrl: null,
 };
 
 describe( 'navigation reducer', () => {

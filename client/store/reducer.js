@@ -10,6 +10,14 @@ const reducer = (
 			window.wcNavigation && window.wcNavigation.menuItems
 				? window.wcNavigation.menuItems
 				: [],
+		siteTitle:
+			window.wcNavigation && window.wcNavigation.siteTitle
+				? window.wcNavigation.siteTitle
+				: null,
+		siteUrl:
+			window.wcNavigation && window.wcNavigation.siteUrl
+				? window.wcNavigation.siteUrl
+				: null,
 	},
 	{ type, activeItem, menuItems }
 ) => {

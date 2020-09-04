@@ -16,7 +16,7 @@ import { withSelect } from '@wordpress/data';
 /**
  * Internal dependencies
  */
-import { NAVIGATION_STORE_NAME } from './store';
+import { NAVIGATION_STORE_NAME } from '../../store';
 
 const NavigationContainer = ( { menuItems } ) => {
 	useEffect( () => {

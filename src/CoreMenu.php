@@ -170,19 +170,6 @@ class CoreMenu {
 				'menuId'     => 'secondary',
 			)
 		);
-
-		// User profile.
-		// @todo This may fall under a tertiary menu.
-		Menu::add_category(
-			array(
-				'title'      => wp_get_current_user()->user_login,
-				'capability' => 'read',
-				'id'         => 'profile',
-				'url'        => 'profile.php',
-				'migrate'    => false,
-				'menuId'     => 'secondary',
-			)
-		);
 	}
 
 	/**
